@@ -10,5 +10,4 @@ public abstract class Entregavel {
     public void setConteudo(String conteudo) {
         this.conteudo = conteudo;
     }
-
 }

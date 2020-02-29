@@ -4,6 +4,7 @@ public class Pessoa implements Observer {
     private boolean queroCancelar = false;
     public String nome;
     private Random gerador = new Random ();
+    private String tipoAssinatura;
 
     public Pessoa(String nome) {
         this.nome = nome;
@@ -18,4 +19,9 @@ public class Pessoa implements Observer {
     public boolean queroCancelar () {
 	return this.queroCancelar;
     }
+    
+    public String getTipoAssinatura(){
+        return this.tipoAssinatura;
+    }
+
 }
