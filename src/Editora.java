@@ -5,8 +5,11 @@ import java.util.List;
 
 public class Editora implements Subject {
 
-    private Entregavel e;
+    private Entregavel e = new Entregavel() {
+    };
+
     private List<Observer> observers = new ArrayList<>();
+    private int dia;
 
     @Override
     public void addObserver(Observer o) {
@@ -16,56 +19,55 @@ public class Editora implements Subject {
     @Override
     public void removeObserver(Observer o) {
         observers.remove(o);
-
     }
 
-    /*@Override
-    public void notifyObserver() {
-        List<Observer> aux = new ArrayList<>();
-        int i=0;
-        for (Observer o : observers) {
-            o.update(e);
-            if (!((Pessoa) o).queroCancelar()) {
-                aux.add(o);
-            }
-            System.out.println(" ");
-            i++;
-        }
-        observers.clear();
-        observers.addAll(aux);
-    }*/
-    
     @Override
     public void notifyObserver() {
-        
         List<Observer> aux = new ArrayList<>();
-        int i=0;
-        Calendar rightNow = Calendar.getInstance();
-        int dia = rightNow.get(Calendar.DAY_OF_WEEK);
-        
+
         for (Observer o : observers) {
-            if (dia == 7 || dia == 8 && o. ) {
-               o.update(e);
-                if (!((Pessoa) o).queroCancelar()) {
-                 aux.add(o);
+            if (((Pessoa) o).getConteudo() == "Estadao") {
+                if (((Pessoa) o).getTipoAssinatura() == "Semanal") {
+                    if (dia == 7 || dia == 1) {
+                        e.setConteudo("Estadão Semanal");
+                        o.update(e);
+                    }
+                } else {
+                    e.setConteudo("Estadão Diario");
+                    o.update(e);
                 }
-                System.out.println(" ");
+            } else {
+                if (dia == 7 || dia == 1) {
+                    e.setConteudo("Marie Claire Semanal");
+                    o.update(e);
+                }
             }
-            
-            i++;
+
+            if (((Pessoa) o).getAssinaturaAtiva()) {
+                aux.add(o);
+            }
         }
         observers.clear();
         observers.addAll(aux);
+
     }
 
     public void iniciar() {
-        /*Calendar rightNow = Calendar.getInstance();
-        //System.out.println("Data e Hora atual: " + rightNow.getTime());
-        int dia = rightNow.get(Calendar.DAY_OF_WEEK);
-        //System.out.println("Data e Hora atual: " + dia);
-        if (dia == 7 || dia == 8) {
-         //   notifyObserver();
-        }*/
-        
+        Calendar rightNow = Calendar.getInstance();
+        dia = rightNow.get(Calendar.DAY_OF_WEEK);
+        while (true) {
+            notifyObserver();
+            System.out.println("=====================================================");
+            dia++;
+            if (dia == 8) {
+                dia = 1;
+            }
+            if (observers.isEmpty()) {
+                System.out.println("falimos!!");
+                break;
+            }
+        }
+
     }
+
 }

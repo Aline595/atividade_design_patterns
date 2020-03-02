@@ -1,27 +1,37 @@
+
 import java.util.Random;
 
 public class Pessoa implements Observer {
-    private boolean queroCancelar = false;
-    public String nome;
-    private Random gerador = new Random ();
-    private String tipoAssinatura;
 
-    public Pessoa(String nome) {
-        this.nome = nome;
-    }
+    private String nome;
+    private String conteudo;
+    private String tipoAssinatura;
+    private boolean assinaturaAtiva = true;
+    private Random gerador = new Random();
 
     @Override
-    public void update(Entregavel e) {
-        System.out.println("recebi " + e.getConteudo());
-        queroCancelar = gerador.nextDouble() <= 0.1;
+    public void update(Entregavel entregavel) {
+        System.out.println(nome + ": " + "recebi " + entregavel.getConteudo());
+        assinaturaAtiva = gerador.nextDouble() <= 0.1;
+
     }
 
-    public boolean queroCancelar () {
-	return this.queroCancelar;
+    public Pessoa(String nome, String conteudo, String tipoAssinatura) {
+        this.nome = nome;
+        this.conteudo = conteudo;
+        this.tipoAssinatura = tipoAssinatura;
     }
-    
-    public String getTipoAssinatura(){
+
+    public boolean getAssinaturaAtiva() {
+        return this.assinaturaAtiva;
+    }
+
+    public String getTipoAssinatura() {
         return this.tipoAssinatura;
+    }
+
+    public String getConteudo() {
+        return this.conteudo;
     }
 
 }
